@@ -18,4 +18,7 @@ jobs:
       - run: cat ~/.npmrc || echo "No user .npmrc"
       - run: cat .npmrc || echo "No project .npmrc"
       - run: npm ci
+      - name: Show full npm log after failure
+        if: failure()
+        run: cat /home/runner/.npm/_logs/*.log || echo "No npm log"
       - run: npm run build -- --configuration production
