@@ -20,14 +20,9 @@ jobs:
         with:
           node-version: 18
 
-      - name: Force public npm registry
-        run: npm config set registry https://registry.npmjs.org/
-      
-      - name: Clean npm cache
-        run: npm cache clean --force
-      
-      - name: Remove any existing npm credentials
-        run: rm -f ~/.npmrc
+      - name: Configure npm token
+        run: |
+          echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
 
       # 6. Install dependencies
       - name: Install dependencies
