@@ -12,7 +12,10 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 18
-      - run: ls -a
-      - run: cat .npmrc || echo "No .npmrc"
+      #- run: ls -a
+      #- run: cat .npmrc || echo "No .npmrc"
+      - run: npm config list
+      - run: cat ~/.npmrc || echo "No user .npmrc"
+      - run: cat .npmrc || echo "No project .npmrc"
       - run: npm ci
       - run: npm run build -- --configuration production
