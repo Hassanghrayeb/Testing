@@ -1,0 +1,26 @@
+name: Angular CI/CD
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+      #- run: ls -a
+      #- run: cat .npmrc || echo "No .npmrc"
+      #- run: npm config list
+      #- run: cat ~/.npmrc || echo "No user .npmrc"
+      #- run: cat .npmrc || echo "No project .npmrc"
+      #- name: Use public npm registry
+      #  run: npm config set registry https://registry.npmjs.org/
+      - run: npm ci
+      - name: Show full npm log after failure
+        if: failure()
+        run: cat /home/runner/.npm/_logs/*.log || echo "No npm log"
+      - run: npm run build -- --configuration production
